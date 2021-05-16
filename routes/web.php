@@ -13,10 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','InicioController')->name('inicio.index');
 
 Auth::routes(['verify' => true]);
+
+Route::middleware(['auth','verified'])->group(function(){
+
+    //Establecimiento
+    Route::get('/establecimientos/create','EstablecimientoController@create')->name('establecimientos.create');
+    Route::post('/establecimientos','EstablecimientoController@store')->name('establecimientos.store');
+    
+    //Imagenes
+    Route::post('/imagenes/store', 'ImagenController@store')->name('imagenes.store');
+    Route::delete('/imagenes/{imagen}','ImagenController@destroy')->name('imagenes.destroy');
+});
+
 
 Route::get('/home', 'HomeController@index')->name('home');
