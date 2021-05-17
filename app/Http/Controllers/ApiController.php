@@ -26,5 +26,11 @@ class ApiController extends Controller
         return response()->json($establecimientos);
     }
 
-
+    /**
+     * @param \App\Establecimiento $establecimiento
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Establecimiento $establecimiento){
+        return response()->json($establecimiento);
+    }
 }

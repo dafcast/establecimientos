@@ -12,7 +12,9 @@
                             <span class="font-weight-bold">Horario:</span>
                             {{ hotel.apertura }} - {{ hotel.cierre }}
                         </div>
-                        <a href="" class="btn btn-primary mt-2">Ver establecimiento</a>
+                        <router-link :to="{name: 'establecimiento', params: {id: hotel.id}}">
+                            <a href="" class="btn btn-primary mt-2">Ver establecimiento</a>
+                        </router-link>
                     </div>
                 </div>
             </div>
