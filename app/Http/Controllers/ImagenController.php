@@ -29,7 +29,7 @@ class ImagenController extends Controller
         $imagenDB->save();
 
         $respuesta = [
-            'imagen_id' => $imagenDB->id
+            'ruta_imagen' => $ruta_imagen
         ];
 
         return response()->json($respuesta);
@@ -43,12 +43,14 @@ class ImagenController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy(Imagen $imagen){
-       
-        if(Storage::disk('public')->exists($imagen->ruta_imagen)){
-            Storage::disk('public')->delete($imagen->ruta_imagen);
-        }
+    public function destroy(Request $request){
 
+        // return response()->json($request);
+
+        if(Storage::disk('public')->exists($request->ruta_imagen)){
+            Storage::disk('public')->delete($request->ruta_imagen);
+        }
+        $imagen = Imagen::where('ruta_imagen',$request->ruta_imagen);
         $imagen->delete();
 
         $response = [

@@ -17,9 +17,31 @@ document.addEventListener('DOMContentLoaded', () =>{
             dictDefaultMessage: "Cargue sus archivos aqui",
             addRemoveLinks: true,
             dictRemoveFile: 'Eliminar imagen',
+            init: function() {
+                const galeria = document.querySelectorAll('.galeria')
+
+                if(galeria.length > 0){
+                    galeria.forEach(imagen => {
+                        
+                        const imagenPublicada ={};
+                        imagenPublicada.size = 1;
+                        imagenPublicada.name = imagen.value;
+                        imagenPublicada.ruta_imagen = imagen.value;
+
+                        this.options.addedfile.call(this,imagenPublicada);
+                        this.options.thumbnail.call(this,imagenPublicada,`/storage/${imagenPublicada.name}`);
+
+
+                        imagenPublicada.previewElement.classList.add('dz-success');
+                        imagenPublicada.previewElement.classList.add('dz-complete');
+
+                    })
+                }
+            },
             success: function(file,response){
                 // console.log(file);
-                file.imagen_id = response.imagen_id;
+                file.ruta_imagen = response.ruta_imagen;
+                // console.log(file.ruta_imagen);
                 // console.log(response);
             },
             error: function(file,message,xhr){
@@ -34,7 +56,10 @@ document.addEventListener('DOMContentLoaded', () =>{
                 // const params = {
                 //     imagen_id: file.imagen_id
                 // };
-                axios.delete(`/imagenes/${file.imagen_id}`)
+                const params = {
+                    ruta_imagen: file.ruta_imagen
+                }
+                axios.post(`/imagenes/destroy`, params)
                     .then( (response) => {
                         // console.log(response);
                         file.previewElement.parentNode.removeChild(file.previewElement);

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import VuePageTransition from 'vue-page-transition'
 
 import InicioEstablecimientos from '../components/InicioEstablecimientos'
 import Establecimiento from '../components/Establecimiento'
@@ -23,6 +24,7 @@ const router = new VueRouter({
 
 
 Vue.use(VueRouter)
+Vue.use(VuePageTransition)
 
 
 export default router;

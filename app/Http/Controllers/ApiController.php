@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imagen;
 use App\Categoria;
 use App\Establecimiento;
 use Illuminate\Http\Request;
@@ -31,6 +32,20 @@ class ApiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Establecimiento $establecimiento){
+        $imagenes = Imagen::where('id_establecimiento', $establecimiento->uuid)->get();
+
+        $establecimiento->imagenes = $imagenes;
         return response()->json($establecimiento);
     }
+
+
+    /**
+     * @return \Illuminate\Http\Response
+     */
+    public function index(){
+        $establecimientos= Establecimiento::with('categoria')->get();
+        return response()->json($establecimientos);
+    }
+
+    
 }
